@@ -266,7 +266,7 @@ exit $?
 ```
 
 ### 三、使用ansible一键部署
-####1. ansible角色目录结构：
+#### 1. ansible角色目录结构：
 ```
 keepalived_nginx/
 ├── ansible.cfg
@@ -297,7 +297,7 @@ keepalived_nginx/
 
 11 directories, 14 files
 ```
-####2.执行部署命令
+#### 2.执行部署命令
 ```
 cd keepalived_nginx/
 [root@host1 keepalived_nginx]# ansible-playbook deploy.yml 
@@ -359,15 +359,15 @@ PLAY RECAP *********************************************************************
 ```
 项目下载地址：https://github.com/gateray/keepalived_nginx
 ### 四、高可用测试
-####1. vip1:192.168.124.251 on host1，vip2:192.168.124.252 on host2
+#### 1. vip1:192.168.124.251 on host1，vip2:192.168.124.252 on host2
 
  
-####2. turn host2 to backup state
+####2 . turn host2 to backup state
 [root@host2 keepalived]# ./convert_state.sh backup
 
 
 
-####3. restore host2 to vip2's master ,then force shutdown nginx
+#### 3. restore host2 to vip2's master ,then force shutdown nginx
 [root@host2 keepalived]# ./convert_state.sh master
 
 [root@host2 keepalived]# systemctl stop nginx.service; mv /usr/local/nginx/sbin/nginx{,.tmp} 
