@@ -1,8 +1,8 @@
 [TOC]
 ### 一、架构描述与应用
 #### 1. 应用场景
-    大多数的互联网公司都会利用nginx的7层反向代理功能来实现后端web server的负载均衡和动静分离。这样做的好处是当单台后端server出现性能瓶颈时可以对其进行横向扩展从而提高整个系统的并发，同时也可以通过后端server提供的http或tcp监控接口对其进行健康检查实现自动Failover和Failback。
-    在nginx给我们带来诸多好处的同时，自身却成为了整套系统的单点所在，试想一下nginx如果宕机了（虽然可能性不大），整个系统将会无法访问，由此可见对nginx server进行高可用的必要性。常见的高可用解决方案有heartbeat、keepalived等，其中以keepalived的实现最为轻量级、配置简单，所以在对nginx的高可用实现中更多会采用keepalived，下面主要也是以keepalived为例讲解。
+   大多数的互联网公司都会利用nginx的7层反向代理功能来实现后端web server的负载均衡和动静分离。这样做的好处是当单台后端server出现性能瓶颈时可以对其进行横向扩展从而提高整个系统的并发，同时也可以通过后端server提供的http或tcp监控接口对其进行健康检查实现自动Failover和Failback。
+   在nginx给我们带来诸多好处的同时，自身却成为了整套系统的单点所在，试想一下nginx如果宕机了（虽然可能性不大），整个系统将会无法访问，由此可见对nginx server进行高可用的必要性。常见的高可用解决方案有heartbeat、keepalived等，其中以keepalived的实现最为轻量级、配置简单，所以在对nginx的高可用实现中更多会采用keepalived，下面主要也是以keepalived为例讲解。
 #### 2. 架构说明
     上面的架构图中，nginx采用了主主模型，相对主备模型来说，能够更充分的利用服务器资源，原因是主备模式下，仅有一台nginx server可以对外提供服务，备用的nginx server仅会在主nginx server不可用时才会提升为主nginx server对外提供服务；主主模型还可以利用dns的解析一定程度上实现nginx本身的负载均衡，客户端访问网站的流程如下：
     1）client向dns server请求解析www.xxx.com的ip
